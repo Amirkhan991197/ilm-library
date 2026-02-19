@@ -70,37 +70,52 @@ document.addEventListener("DOMContentLoaded", function () {
     /* ==============================
        CONTACT FORM (EmailJS)
     ============================== */
+document.getElementById("contactForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
 
-    const contactForm = document.getElementById("contactForm");
+    const form = document.getElementById("contactForm");
+    const formData = new FormData(form);
 
-    if (contactForm && typeof emailjs !== "undefined") {
+    // 🔑 Web3Forms Access Key
+    formData.append("access_key", "a647c6f6-0460-46d9-8560-4108ad01fa8e"); 
 
-        emailjs.init("Y6R0FFPUKhENAJTo3");
+    // Custom Email Message
+    formData.set("message", `
+------------------------------
+NEW CONTACT FORM MESSAGE
+------------------------------
 
-        contactForm.addEventListener("submit", function (e) {
-            e.preventDefault();
+Name: ${form.name.value}
+Email: ${form.email.value}
+Phone: ${form.phone.value}
 
-            let templateParams = {
-                name: document.getElementById("name")?.value || "",
-                email: document.getElementById("email")?.value || "",
-                phone: document.getElementById("phone")?.value || "",
-                message: document.getElementById("message")?.value || ""
-            };
+Message:
+${form.message.value}
+------------------------------
+`);
 
-            emailjs.send("service_lnqxgdq", "template_22pn979~", templateParams)
-                .then(function () {
-                    const successMessage = document.getElementById("successMessage");
-                    if (successMessage) {
-                        successMessage.style.display = "block";
-                    }
-                    contactForm.reset();
-                })
-                .catch(function (error) {
-                    console.error("Email Failed:", error);
-                    alert("Email Failed");
-                });
+    try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            body: formData
         });
+
+        const result = await response.json();
+
+        if(result.success) {
+            // Show success message
+            document.getElementById("successMessage").style.display = "block";
+            form.reset();
+        } else {
+            alert("Submission failed! Please check your access key and internet connection.");
+        }
+
+    } catch(error) {
+        console.error(error);
+        alert("Error submitting form! Please try again.");
     }
+});
+
 
 
     /* ==============================
