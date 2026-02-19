@@ -317,88 +317,50 @@ document.getElementById("admissionForm").addEventListener("submit", function(e){
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
 <script>
-(function(){
-    emailjs.init("Y6R0FFPUKhENAJTo3"); 
-})();
-
-document.getElementById("admissionForm").addEventListener("submit", function(e) {
+document.getElementById("admissionForm").addEventListener("submit", async function(e) {
     e.preventDefault();
 
-    // All Form Values
-    let name = document.getElementById("name").value;
-    let father = document.getElementById("father").value;
-    let dob = document.getElementById("dob").value;
-    let occupation = document.getElementById("occupation").value;
-    let mobile = document.getElementById("mobile").value;
-    let email = document.getElementById("email").value;
-    let address = document.getElementById("address").value;
-    let paddress = document.getElementById("paddress").value;
-    let qualification = document.getElementById("qualification").value;
-    let college = document.getElementById("college").value;
-    let course = document.getElementById("course").value;
-    let aadhar = document.getElementById("aadhar").value;
-    let joining = document.getElementById("joining").value;
+    const form = document.getElementById("admissionForm");
+    const formData = new FormData(form);
 
-    // EmailJS Template Params (Full Data)
-    let templateParams = {
-        name,
-        father,
-        dob,
-        occupation,
-        mobile,
-        email,
-        address,
-        paddress,
-        qualification,
-        college,
-        course,
-        aadhar,
-        joining
-    };
+    // 👇 Web3Forms access key yaha daalo
+    formData.append("access_key", "98be9be3-1832-4825-b697-02a8bde8fc02");
 
-    // 1️⃣ Send Email (background)
-    emailjs.send("service_0nya3aj", "template_ep88nlj", templateParams);
+    const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+    });
 
-    // 2️⃣ WhatsApp Full Message
-    let message = `
-------------------------------
+    const result = await response.json();
+
+    if(result.success) {
+
+        // WhatsApp Message
+        let message = `
 NEW ADMISSION FORM
-------------------------------
 
-Name: ${name}
-Father Name: ${father}
-DOB: ${dob}
-Occupation: ${occupation}
-
-Mobile: ${mobile}
-Email: ${email}
-
-Current Address:
-${address}
-
-Permanent Address:
-${paddress}
-
-Qualification: ${qualification}
-College: ${college}
-Course: ${course}
-
-Aadhar: ${aadhar}
-Date of Joining: ${joining}
-------------------------------
+Name: ${form.name.value}
+Father Name: ${form.father.value}
+Mobile: ${form.mobile.value}
+Qualification: ${form.qualification.value}
 `;
 
+        let phoneNumber = "919523576967";
 
+        window.open(
+            "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message),
+            "_blank"
+        );
 
-    let phoneNumber = "919523576967";
+        alert("Admission Submitted Successfully!");
+        form.reset();
 
-    window.open(
-        "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message),
-        "_blank"
-    );
-
+    } else {
+        alert("Something went wrong!");
+    }
 });
 </script>
+
 
 
 
