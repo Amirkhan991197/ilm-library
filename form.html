@@ -200,43 +200,44 @@ button:hover{
 <div class="container">
 <h2><img src="images/logo.png" alt="Library Logo" class="form-logo">Library Admission Form</h2>
 
-<form id="admissionForm" enctype="multipart/form-data">
+<form id="admissionForm">
 
 <h3>Personal Details</h3>
 
 <label>Full Name</label>
-<input type="text" name="name" required>
+<input type="text" id="name" required>
 
 <label>Father Name</label>
-<input type="text" name="father" required>
+<input type="text" id="father" required>
 
 <label>Date of Birth</label>
-<input type="date" name="dob" required>
+<input type="date" id="dob" required>
 
 <label>Occupation</label>
-<input type="text" name="occupation" required>
+<input type="text" id="occupation" required>
 
 <label>Profile Picture</label>
-<input type="file" name="photo" accept="image/*" required>
+<input type="file" id="photo" accept="image/*" required>
+<img id="preview">
 
 <h3>Contact Details</h3>
 
 <label>Mobile Number</label>
-<input type="tel" name="mobile" maxlength="10" required>
+<input type="tel" id="mobile" maxlength="10" required>
 
 <label>Email</label>
-<input type="email" name="email">
+<input type="email" id="email">
 
 <label>Current Address</label>
-<textarea name="address" rows="3" required></textarea>
+<textarea id="address" rows="3" required></textarea>
 
 <label>Permanent Address</label>
-<textarea name="paddress" rows="3" required></textarea>
+<textarea id="paddress" rows="3" required></textarea>
 
 <h3>Education Details</h3>
 
 <label>Highest Qualification</label>
-<select name="qualification" required>
+<select id="qualification" required>
 <option value="">Select</option>
 <option>10th</option>
 <option>12th</option>
@@ -246,22 +247,18 @@ button:hover{
 </select>
 
 <label>School / College Name</label>
-<input type="text" name="college" required>
+<input type="text" id="college" required>
 
 <label>Course / Stream</label>
-<input type="text" name="course" required>
+<input type="text" id="course" required>
 
 <h3>Identity Details</h3>
 
 <label>Aadhar Number</label>
-<input type="text" name="aadhar" maxlength="12" required>
+<input type="text" id="aadhar" maxlength="12" required>
 
 <label>Date of Joining</label>
-<input type="date" name="joining" required>
-
-<!-- Hidden Fields -->
-<input type="hidden" name="subject" value="🎓 New Admission Form Submission">
-<input type="hidden" name="from_name" value="Admission Department">
+<input type="date" id="joining" required>
 
 <button type="submit">Submit Admission</button>
 
@@ -291,7 +288,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
-
 <script>
 document.getElementById("admissionForm").addEventListener("submit", async function(e) {
     e.preventDefault();
@@ -300,11 +296,13 @@ document.getElementById("admissionForm").addEventListener("submit", async functi
     const formData = new FormData(form);
 
     // 🔑 Web3Forms Access Key
-    formData.append("access_key", "2cbb9399-05ae-4bde-80b9-e9d0e15461a2");
+    formData.append("access_key", "2cbb9399-05ae-4bde-80b9-e9d0e15461a2"); // Replace with your key
 
-    // Custom Email Message Format
+    // Custom Email Message
     formData.set("message", `
+------------------------------
 NEW ADMISSION FORM
+------------------------------
 
 Name: ${form.name.value}
 Father Name: ${form.father.value}
@@ -326,9 +324,11 @@ Course: ${form.course.value}
 
 Aadhar: ${form.aadhar.value}
 Date of Joining: ${form.joining.value}
+------------------------------
 `);
 
     try {
+        // 1️⃣ Send Email via Web3Forms
         const response = await fetch("https://api.web3forms.com/submit", {
             method: "POST",
             body: formData
@@ -338,31 +338,54 @@ Date of Joining: ${form.joining.value}
 
         if(result.success) {
 
-            // WhatsApp Message
-            let whatsappMessage = `
+            // 2️⃣ WhatsApp Full Message
+let whatsappMessage = `
+------------------------------
 NEW ADMISSION FORM
+------------------------------
 
 Name: ${form.name.value}
+Father Name: ${form.father.value}
+DOB: ${form.dob.value}
+Occupation: ${form.occupation.value}
+
 Mobile: ${form.mobile.value}
+Email: ${form.email.value}
+
+Current Address:
+${form.address.value}
+
+Permanent Address:
+${form.paddress.value}
+
 Qualification: ${form.qualification.value}
+College: ${form.college.value}
+Course: ${form.course.value}
+
+Aadhar: ${form.aadhar.value}
+Date of Joining: ${form.joining.value}
+------------------------------
 `;
 
-            let phoneNumber = "919523576967";
+
+            let phoneNumber = "919523576967"; // Change as needed
 
             window.open(
                 "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(whatsappMessage),
                 "_blank"
             );
 
+            // 3️⃣ Show Success Alert
             alert("Admission Submitted Successfully!");
             form.reset();
 
         } else {
-            alert("Submission failed!");
+            alert("Submission failed! Please check your access key and internet connection.");
         }
 
     } catch(error) {
-        alert("Error submitting form!");
+        console.error(error);
+        alert("Error submitting form! Please try again.");
     }
 });
 </script>
