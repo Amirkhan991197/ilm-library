@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Library Admission Form</title>
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f6f9;
+    margin:0;
+    padding:0px;
+}
+
+.container{
+    max-width:750px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 15px rgba(0,0,0,0.1);
+}
+
+h2{
+    text-align:center;
+}
+
+h3{
+    margin-top:20px;
+    color:#007bff;
+    border-bottom:2px solid #007bff;
+    padding-bottom:5px;
+}
+
+label{
+    display:block;
+    margin-top:12px;
+    font-weight:bold;
+}
+
+input, textarea, select{
+    width:100%;
+    padding:10px;
+    margin-top:6px;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+textarea{
+    resize:none;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:25px;
+    background:#007bff;
+    color:white;
+    border:none;
+    border-radius:6px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+#preview{
+    width:120px;
+    margin-top:10px;
+    display:none;
+    border-radius:6px;
+}
+
+/* Success Popup */
+.success-box{
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:#28a745;
+    color:white;
+    padding:15px 20px;
+    border-radius:8px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+    opacity:0;
+    transform:translateY(-20px);
+    transition:all 0.5s ease;
+    z-index:999;
+}
+
+.success-box.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* Responsive */
+@media(max-width:480px){
+    .container{
+        padding:15px;
+    }
+}
+
+.form-logo {
+    width: 60px;        /* Desktop size */
+    height: auto;       /* Proportion maintain karega */
+    vertical-align: middle;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+    .form-logo {
+        width: 45px;    /* Mobile me thoda chhota */
+    }
+}
+
+
+</style>
+
+</head>
+
+<body>
+<!-- TOP BAR -->
+<div class="top-bar">
+    <div class="top-left">
+        <span>🏛 Welcome to Ilm Library 📚</span>
+    </div>
+
+    <div class="top-right">
+        <a href="https://www.facebook.com/ilm.library" target="_blank">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://www.instagram.com/ilm.library" target="_blank">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://wa.me/919891405532" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://www.youtube.com/@ilm.library" target="_blank">
+            <i class="fab fa-youtube"></i>
+        </a>
+    </div>
+</div>
+
+<!-- MIDDLE HEADER -->
+<div class="middle-header">
+    <div class="mail">
+        📧 Mail Us <br>
+        <span>ilm_library@gmail.com</span>
+    </div>
+
+    <div class="logoc">
+        <img src="images/logoc.jpeg" alt="Logocenter">
+    </div>
+
+    <div class="call">
+        📞 Call Us <br>
+        <span>9891405532 , 9319665532</span>
+    </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">
+        <img src="images/logo.png" alt="Logocorner">
+    </div>
+
+    <div class="menu-toggle" onclick="toggleMenu()">☰ MENU</div>
+
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html"><i class="fas fa-home" style= "padding:5px"></i> Home</a></li>
+
+        <li class="dropdown">
+            <a href="#"><i class="fas fa-book"></i> About ▾</a>
+            <ul class="dropdown-menu">
+                <li><a href="index.html#founder">Founder</a></li>
+                <li><a href="index.html#branch">Branches</a></li>
+            </ul>
+        </li>
+
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#fees">Fees</a></li>
+        <li><a href="index.html#gallery">Gallery</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="index.html#facilities">Facilities</a></li>
+    </ul>
+</nav>
+
+
+<div class="container">
+<h2><img src="images/logo.png" alt="Library Logo" class="form-logo">Library Admission Form</h2>
+
+<form id="admissionForm">
+
+<h3>Personal Details</h3>
+
+<label>Full Name</label>
+<input type="text" id="name" required>
+
+<label>Father Name</label>
+<input type="text" id="father" required>
+
+<label>Date of Birth</label>
+<input type="date" id="dob" required>
+
+<label>Occupation</label>
+<input type="text" id="occupation" required>
+
+<label>Profile Picture</label>
+<input type="file" id="photo" accept="image/*" required>
+<img id="preview">
+
+<h3>Contact Details</h3>
+
+<label>Mobile Number</label>
+<input type="tel" id="mobile" maxlength="10" required>
+
+<label>Email</label>
+<input type="email" id="email">
+
+<label>Current Address</label>
+<textarea id="address" rows="3" required></textarea>
+
+<label>Permanent Address</label>
+<textarea id="paddress" rows="3" required></textarea>
+
+<h3>Education Details</h3>
+
+<label>Highest Qualification</label>
+<select id="qualification" required>
+<option value="">Select</option>
+<option>10th</option>
+<option>12th</option>
+<option>Diploma</option>
+<option>Graduation</option>
+<option>Post Graduation</option>
+</select>
+
+<label>School / College Name</label>
+<input type="text" id="college" required>
+
+<label>Course / Stream</label>
+<input type="text" id="course" required>
+
+<h3>Identity Details</h3>
+
+<label>Aadhar Number</label>
+<input type="text" id="aadhar" maxlength="12" required>
+
+<label>Date of Joining</label>
+<input type="date" id="joining" required>
+
+<button type="submit">Submit Admission</button>
+
+</form>
+
+<!-- Success Popup -->
+<div class="success-box" id="successBox">
+    ✅ Admission Submitted Successfully!
+</div>
+
+</div> <!-- container close -->
+
+<!--header and footer featch--> 
+<div id="footer"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    
+
+    fetch("footer.html")
+    .then(res => res.text())
+    .then(data => {
+        document.getElementById("footer").innerHTML = data;
+    });
+
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+(function(){
+    emailjs.init("YOUR_PUBLIC_KEY");
+})();
+
+document.getElementById("admissionForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+        name: document.getElementById("name").value,
+        father: document.getElementById("father").value,
+        mobile: document.getElementById("mobile").value,
+        email: document.getElementById("email").value,
+        address: document.getElementById("address").value
+    }).then(function(){
+        alert("Form Submitted Successfully!");
+    });
+});
+</script>
+
+<!--whats app & gmail integration code -->
+
+       <!-- EmailJS Library -->
+<!-- EmailJS Library -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+(function(){
+    emailjs.init("Y6R0FFPUKhENAJTo3"); 
+})();
+
+document.getElementById("admissionForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    // All Form Values
+    let name = document.getElementById("name").value;
+    let father = document.getElementById("father").value;
+    let dob = document.getElementById("dob").value;
+    let occupation = document.getElementById("occupation").value;
+    let mobile = document.getElementById("mobile").value;
+    let email = document.getElementById("email").value;
+    let address = document.getElementById("address").value;
+    let paddress = document.getElementById("paddress").value;
+    let qualification = document.getElementById("qualification").value;
+    let college = document.getElementById("college").value;
+    let course = document.getElementById("course").value;
+    let aadhar = document.getElementById("aadhar").value;
+    let joining = document.getElementById("joining").value;
+
+    // EmailJS Template Params (Full Data)
+    let templateParams = {
+        name,
+        father,
+        dob,
+        occupation,
+        mobile,
+        email,
+        address,
+        paddress,
+        qualification,
+        college,
+        course,
+        aadhar,
+        joining
+    };
+
+    // 1️⃣ Send Email (background)
+    emailjs.send("service_0nya3aj", "template_ep88nlj", templateParams);
+
+    // 2️⃣ WhatsApp Full Message
+    let message = `
+------------------------------
+NEW ADMISSION FORM
+------------------------------
+
+Name: ${name}
+Father Name: ${father}
+DOB: ${dob}
+Occupation: ${occupation}
+
+Mobile: ${mobile}
+Email: ${email}
+
+Current Address:
+${address}
+
+Permanent Address:
+${paddress}
+
+Qualification: ${qualification}
+College: ${college}
+Course: ${course}
+
+Aadhar: ${aadhar}
+Date of Joining: ${joining}
+------------------------------
+`;
+
+
+
+    let phoneNumber = "919523576967";
+
+    window.open(
+        "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message),
+        "_blank"
+    );
+
+});
+</script>
+
+
+
+
+
+
+
+
+<script src="main.js"></script>
+<script src="form.js"></script>
+<script src="script.js"></script>
+
+
+</body>
+</html>
